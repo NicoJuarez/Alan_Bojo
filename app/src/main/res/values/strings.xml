@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Alan Bojo</string>
+    <!--Headers-->
+    <string name="header_task_caption">Tasks</string>
+    <string name="header_work_caption">Work Spaces</string>
+
+    <!--Text-->
+    <string name="text_empty">Empty</string>
+</resources>
