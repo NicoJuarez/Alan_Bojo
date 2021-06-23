@@ -1,17 +1,14 @@
-package com.alanstd_3.alanbojo.ui.fragments
+package com.alanstd_3.alanbujo.ui.fragments
 
 import android.animation.Animator
-import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.alanstd_3.alanbojo.R
+import com.alanstd_3.alanbujo.R
 import com.google.android.material.snackbar.Snackbar
-import java.time.Duration
 
 open class GeneralFragment : Fragment() {
 

@@ -1,4 +1,4 @@
-package com.alanstd_3.alanbojo
+package com.alanstd_3.alanbujo
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

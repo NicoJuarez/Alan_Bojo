@@ -51,4 +51,7 @@ dependencies {
     // Room
     implementation "androidx.room:room-ktx:2.3.0"
     kapt "androidx.room:room-compiler:2.3.0"
+
+    // Color picker
+    implementation 'petrov.kristiyan:colorpicker-library:1.1.10'
 }

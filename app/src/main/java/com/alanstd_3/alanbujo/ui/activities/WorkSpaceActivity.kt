@@ -1,24 +1,26 @@
-package com.alanstd_3.alanbojo
+package com.alanstd_3.alanbujo.ui.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.room.Room
-import com.alanstd_3.alanbojo.database.entities.Task
-import com.alanstd_3.alanbojo.database.entities.Work
-import com.alanstd_3.alanbojo.database.repository.BUJODataBase
-import com.alanstd_3.alanbojo.ui.fragments.WorkSpaceFragment
-import com.alanstd_3.alanbojo.ui.fragments.entities.WorkSpace
+import com.alanstd_3.alanbujo.R
+import com.alanstd_3.alanbujo.database.entities.Task
+import com.alanstd_3.alanbujo.database.entities.Work
+import com.alanstd_3.alanbujo.database.repository.BUJODataBase
+import com.alanstd_3.alanbujo.ui.fragments.WorkSpaceFragment
+import com.alanstd_3.alanbujo.ui.fragments.entities.WorkSpace
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 
-class MainActivity : AppCompatActivity() {
+class WorkSpaceActivity: AppCompatActivity(){
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_work_space)
 
         window?.let {
-            it.statusBarColor = ContextCompat.getColor(this@MainActivity, R.color.alan_primary)
+            it.statusBarColor = ContextCompat.getColor(this@WorkSpaceActivity, R.color.alan_primary)
         }
 
 

@@ -1,7 +1,7 @@
-package com.alanstd_3.alanbojo.database.dao
+package com.alanstd_3.alanbujo.database.dao
 
 import androidx.room.*
-import com.alanstd_3.alanbojo.database.entities.Task
+import com.alanstd_3.alanbujo.database.entities.Task
 
 @Dao
 interface TaskDAO {

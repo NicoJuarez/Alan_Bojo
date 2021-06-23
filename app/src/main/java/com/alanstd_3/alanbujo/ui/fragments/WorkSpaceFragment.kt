@@ -1,4 +1,4 @@
-package com.alanstd_3.alanbojo.ui.fragments
+package com.alanstd_3.alanbujo.ui.fragments
 
 import android.graphics.Paint
 import android.os.Bundle
@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
-import com.alanstd_3.alanbojo.R
-import com.alanstd_3.alanbojo.databinding.FragmentWorkSpaceBinding
-import com.alanstd_3.alanbojo.ui.fragments.entities.WorkSpace
+import com.alanstd_3.alanbujo.R
+import com.alanstd_3.alanbujo.databinding.FragmentWorkSpaceBinding
+import com.alanstd_3.alanbujo.ui.fragments.entities.WorkSpace
 import com.google.android.material.snackbar.Snackbar
 
 

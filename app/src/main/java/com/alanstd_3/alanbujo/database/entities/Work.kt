@@ -1,4 +1,4 @@
-package com.alanstd_3.alanbojo.database.entities
+package com.alanstd_3.alanbujo.database.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

@@ -6,4 +6,8 @@
 
     <!--Text-->
     <string name="text_empty">Empty</string>
+
+
+    <!--Button-->
+    <string name="button_add_work_space">Add work space</string>
 </resources>

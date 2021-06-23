@@ -7,10 +7,17 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="gray_67">#676767</color>
+    <color name="gray_AA">#AAAAAA</color>
     <color name="white">#FFFFFFFF</color>
 
+    <!--Pastel Colors-->
+    <color name="alan_cream">#FFF4DA</color>
+
+    <!--Hot Colors-->
     <color name="alan_pink">#ED2675</color>
     <color name="alan_yellow">#FFAC1B</color>
+    <color name="alan_green">#6FD10B</color>
+    <color name="alan_aqua">#04BC5D</color>
 
     <!--Temas-->
     <color name="alan_primary">@color/alan_yellow</color>

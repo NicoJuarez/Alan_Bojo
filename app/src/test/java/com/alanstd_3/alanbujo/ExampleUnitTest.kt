@@ -1,4 +1,4 @@
-package com.alanstd_3.alanbojo
+package com.alanstd_3.alanbujo
 
 import org.junit.Test
 

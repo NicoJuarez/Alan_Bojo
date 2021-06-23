@@ -1,7 +1,7 @@
-package com.alanstd_3.alanbojo.ui.fragments.entities
+package com.alanstd_3.alanbujo.ui.fragments.entities
 
-import com.alanstd_3.alanbojo.database.entities.Task
-import com.alanstd_3.alanbojo.database.entities.Work
+import com.alanstd_3.alanbujo.database.entities.Task
+import com.alanstd_3.alanbujo.database.entities.Work
 
 /**
  * Class representation of Work Space View._
