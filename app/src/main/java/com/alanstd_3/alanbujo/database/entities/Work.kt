@@ -12,6 +12,8 @@ data class Work(
     var subtitle: String = "",
     @ColumnInfo(name = DESCRIPTION)
     var description: String = "",
+    @ColumnInfo(name = COLOR)
+    var color: String = "",
 
     ) {
     @PrimaryKey(autoGenerate = true)
@@ -28,6 +30,7 @@ data class Work(
         const val TITLE = "title"
         const val SUBTITLE = "subtitle"
         const val DESCRIPTION = "desc"
+        const val COLOR = "color"
         const val PARENT = "fk_work"
     }
 }

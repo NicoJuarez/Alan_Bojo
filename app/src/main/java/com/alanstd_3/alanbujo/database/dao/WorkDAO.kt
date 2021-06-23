@@ -26,4 +26,8 @@ interface WorkDAO {
 
     @Query("select * from ${Work.TABLE_WORK}")
     suspend fun getAll(): List<Work>
+
+    @Query("select exists (select 1 from ${Work.TABLE_WORK} WHERE title = :workName)")
+    suspend fun exists(workName: String): Boolean
+
 }
