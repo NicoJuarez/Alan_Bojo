@@ -1,5 +1,6 @@
 package com.alanstd_3.alanbujo.ui.dialogs
 
+import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +13,7 @@ import com.alanstd_3.alanbujo.database.entities.Work
 import com.alanstd_3.alanbujo.databinding.DialogAddWorkSpaceBinding
 import com.alanstd_3.alanbujo.general.ColorUtils
 import petrov.kristiyan.colorpicker.ColorPicker
+import java.lang.IllegalArgumentException
 
 class AddWorkSpaceDialog : BaseDialog() {
 
@@ -41,6 +43,7 @@ class AddWorkSpaceDialog : BaseDialog() {
         )
 
         configureButtons()
+        setDefaultColor()
 
         return binding.root
     }
@@ -59,17 +62,17 @@ class AddWorkSpaceDialog : BaseDialog() {
                 mPicker.setOnFastChooseColorListener(object :
                     ColorPicker.OnFastChooseColorListener {
                     override fun setOnFastChooseColorListener(position: Int, color: Int) {
-                        if (listener.canSaveWork(binding.inputTitle.text.toString())) {
-                            context?.let { c ->
-                                binding.selectedColor.backgroundTintList =
-                                    ContextCompat.getColorStateList(c, listColors[position])
-                                hexColor = ColorUtils.getColorHex(listColors[position], context!!)
-                                Log.d(TAG, "setOnFastChooseColorListener: $hexColor")
-                            }
-                            mPicker.dismissDialog()
-                        } else {
-                            setErrorTitle(getString(R.string.text_error_title_exists))
+
+                        context?.let { c ->
+                            binding.selectedColor.backgroundTintList =
+                                ContextCompat.getColorStateList(c, listColors[position])
+                            hexColor = ColorUtils.getColorHex(
+                                ContextCompat.getColor(c, listColors[position])
+                            )
+                            Log.d(TAG, "setOnFastChooseColorListener: $hexColor")
                         }
+                        mPicker.dismissDialog()
+
                     }
 
                     override fun onCancel() {
@@ -82,15 +85,20 @@ class AddWorkSpaceDialog : BaseDialog() {
         }
 
         binding.submitButtom.setOnClickListener {
-            val work = Work(
-                binding.inputTitle.text.toString(),
-                binding.inputSubtitle.text.toString(),
-                ""
-            )
-            work.color = hexColor
+            if (listener.canSaveWork(binding.inputTitle.text.toString())) {
+                val work = Work(
+                    binding.inputTitle.text.toString(),
+                    binding.inputSubtitle.text.toString(),
+                    ""
+                )
+                work.color = hexColor
 
-            listener.onSubmitClick(work)
-            dialog?.dismiss()
+                listener.onSubmitClick(work)
+                dialog?.dismiss()
+
+            } else {
+                setErrorTitle(getString(R.string.text_error_title_exists))
+            }
         }
     }
 
@@ -127,6 +135,17 @@ class AddWorkSpaceDialog : BaseDialog() {
     private fun setErrorTitle(error: String?) {
         binding.inputTitle.error = error
         binding.inputTitle.requestFocus()
+    }
+
+    private fun setDefaultColor() {
+        context?.let { c ->
+            val color = ContextCompat.getColorStateList(c, R.color.alan_primary)
+            color?.let { cl ->
+                binding.selectedColor.backgroundTintList = cl
+                hexColor = ColorUtils.getColorHex(cl.defaultColor)
+            }
+
+        }
     }
 
     interface OnSubmitListener {

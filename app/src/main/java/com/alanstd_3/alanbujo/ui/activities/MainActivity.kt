@@ -1,8 +1,16 @@
 package com.alanstd_3.alanbujo.ui.activities
 
+import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.alanstd_3.alanbujo.R
 import com.alanstd_3.alanbujo.database.entities.Work
@@ -43,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun canSaveWork(title: String): Boolean {
-                    return repository.workExists(title)
+                    return !repository.workExists(title)
                 }
             }
 
@@ -77,11 +85,43 @@ class MainActivity : AppCompatActivity() {
         binding.list.adapter = buildAdapter()
     }
 
-    private fun buildAdapter(): ArrayAdapter<String> {
-        return ArrayAdapter(
-            applicationContext, android.R.layout.simple_selectable_list_item,
-            getAllWorkSpaces()
-        )
+    private fun buildAdapter(): MyAdapter {
+//        return ArrayAdapter(
+//            applicationContext, android.R.layout.simple_selectable_list_item,
+//            getAllWorkSpaces()
+//        )
+
+        return MyAdapter(applicationContext, R.layout.item_work_space, repository.getAllWorks())
+
+    }
+
+    class MyAdapter(context: Context, resID: Int, list: List<Work>) :
+        ArrayAdapter<Work>(context, resID, list) {
+
+        override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_work_space, parent, false)
+
+            val workItem = getItem(position)
+            workItem?.let { work ->
+                view.findViewById<TextView>(R.id.title).text = work.title
+                view.findViewById<TextView>(R.id.subtitle).text = work.subtitle
+                view.findViewById<TextView>(R.id.description).text = work.color
+                context?.let {
+                    if(work.color.isNotEmpty())
+                    view.findViewById<CardView>(R.id.card_ws).setCardBackgroundColor(
+//                        ContextCompat.getColorStateList(
+//                            it.applicationContext,
+//                            Color.parseColor(work.color)
+//                        )
+                        ColorStateList.valueOf(Color.parseColor(work.color))
+                    )
+
+                }
+            }
+            return view
+        }
+
     }
 
 }
