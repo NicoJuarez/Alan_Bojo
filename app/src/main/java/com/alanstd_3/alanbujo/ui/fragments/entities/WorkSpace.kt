@@ -12,4 +12,10 @@ data class WorkSpace(
     var subtitle: String = "Subtitle",
     var tasks: List<Task> = mutableListOf(),
     var works: List<Work> = mutableListOf()
-)
+) {
+    constructor(work: Work) : this(work, mutableListOf(), mutableListOf())
+    constructor(work: Work, tasks: List<Task>, works: List<Work>) : this(
+        title = work.title, subtitle = work.subtitle,
+        tasks = tasks, works = works
+    )
+}

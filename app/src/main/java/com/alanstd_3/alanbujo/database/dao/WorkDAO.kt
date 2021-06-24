@@ -22,7 +22,10 @@ interface WorkDAO {
     suspend fun getByParent(parentID: Long): List<Work>
 
     @Query("select * from ${Work.TABLE_WORK} where title = :title")
-    suspend fun getByTitle(title: String): List<Work>
+    suspend fun getByTitle(title: String): Work
+
+    @Query("select * from ${Work.TABLE_WORK} where _id = :id")
+    suspend fun getByID(id: Long): Work
 
     @Query("select * from ${Work.TABLE_WORK}")
     suspend fun getAll(): List<Work>

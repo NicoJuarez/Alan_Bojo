@@ -36,4 +36,17 @@ class Repository(context: Context) {
             return@runBlocking db.workDao().exists(title)
         }
     }
+
+    fun getWorkByTitle(title: String): Work {
+        return runBlocking(Dispatchers.Default) {
+            return@runBlocking db.workDao().getByTitle(title)
+        }
+    }
+
+    fun getWorkByID(id: Long): Work {
+        return runBlocking(Dispatchers.Default) {
+            return@runBlocking db.workDao().getByID(id)
+        }
+    }
+
 }

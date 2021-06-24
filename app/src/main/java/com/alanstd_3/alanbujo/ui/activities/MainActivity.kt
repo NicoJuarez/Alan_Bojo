@@ -1,9 +1,11 @@
 package com.alanstd_3.alanbujo.ui.activities
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +25,10 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var repository: Repository
+
+    companion object{
+        private const val TAG = "_MAIN_::"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,16 +92,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun buildAdapter(): MyAdapter {
-//        return ArrayAdapter(
-//            applicationContext, android.R.layout.simple_selectable_list_item,
-//            getAllWorkSpaces()
-//        )
 
-        return MyAdapter(applicationContext, R.layout.item_work_space, repository.getAllWorks())
+        return MyAdapter(applicationContext, R.layout.item_work_space, repository.getAllWorks()
+        ) {
+            Log.d(TAG, "buildAdapter: touched!")
+            val i = Intent(applicationContext, WorkSpaceActivity::class.java)
+            val w = repository.getWorkByTitle(it.findViewById<TextView>(R.id.title).text.toString())
+            i.putExtra("id", w.id)
+            Log.d(TAG, "buildAdapter: id: ${w.id}")
+            startActivity(i)
+        }
 
     }
 
-    class MyAdapter(context: Context, resID: Int, list: List<Work>) :
+    class MyAdapter(
+        context: Context, resID: Int, list: List<Work>,
+        private val listener: View.OnClickListener
+    ) :
         ArrayAdapter<Work>(context, resID, list) {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -108,19 +121,22 @@ class MainActivity : AppCompatActivity() {
                 view.findViewById<TextView>(R.id.subtitle).text = work.subtitle
                 view.findViewById<TextView>(R.id.description).text = work.color
                 context?.let {
-                    if(work.color.isNotEmpty())
-                    view.findViewById<CardView>(R.id.card_ws).setCardBackgroundColor(
-//                        ContextCompat.getColorStateList(
-//                            it.applicationContext,
-//                            Color.parseColor(work.color)
-//                        )
-                        ColorStateList.valueOf(Color.parseColor(work.color))
-                    )
+                    if (work.color.isNotEmpty()) {
+                        val cardView = view.findViewById<CardView>(R.id.card_ws)
+                        cardView.setCardBackgroundColor(
+                            ColorStateList.valueOf(Color.parseColor(work.color))
+                        )
+                        cardView.setOnClickListener(listener)
+                    }
 
                 }
             }
             return view
         }
+
+//        fun setListener(listener: View.OnClickListener){
+//            getView
+//        }
 
     }
 

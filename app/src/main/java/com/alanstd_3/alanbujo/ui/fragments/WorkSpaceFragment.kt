@@ -8,12 +8,19 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
 import com.alanstd_3.alanbujo.R
+import com.alanstd_3.alanbujo.database.entities.Task
+import com.alanstd_3.alanbujo.database.entities.Work
 import com.alanstd_3.alanbujo.databinding.FragmentWorkSpaceBinding
 import com.alanstd_3.alanbujo.ui.fragments.entities.WorkSpace
 import com.google.android.material.snackbar.Snackbar
 
 
 class WorkSpaceFragment(private val workSpace: WorkSpace = WorkSpace()) : GeneralFragment() {
+
+    constructor(work: Work) : this(WorkSpace(work))
+    constructor(work: Work, tasks: List<Task>, works: List<Work>) : this(
+        WorkSpace(work, tasks, works)
+    )
 
     private var _binding: FragmentWorkSpaceBinding? = null
     private val binding: FragmentWorkSpaceBinding
@@ -99,10 +106,12 @@ class WorkSpaceFragment(private val workSpace: WorkSpace = WorkSpace()) : Genera
                 workView.findViewById<TextView>(R.id.description).text = work.description
 
                 workView.setOnClickListener {
-                    if(subtitle.text.isBlank())
+                    if (subtitle.text.isBlank())
                         workTouched(title.text.toString())
                     else
-                        workTouched(title.text.toString().substring(0, title.text.toString().length-1))
+                        workTouched(
+                            title.text.toString().substring(0, title.text.toString().length - 1)
+                        )
                 }
 
                 binding.worksList.addView(workView)
