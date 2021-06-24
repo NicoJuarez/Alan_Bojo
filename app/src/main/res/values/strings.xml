@@ -6,6 +6,8 @@
 
     <!--Text-->
     <string name="text_empty">Empty</string>
+    <!--Text_Error-->
+    <string name="text_error_title_exists">Title already exists</string>
 
 
     <!--Button-->

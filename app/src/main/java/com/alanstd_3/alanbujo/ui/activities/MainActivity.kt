@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.room.Room
 import com.alanstd_3.alanbujo.R
 import com.alanstd_3.alanbujo.database.entities.Work
-import com.alanstd_3.alanbujo.database.repository.BUJODataBase
+import com.alanstd_3.alanbujo.database.repository.Repository
 import com.alanstd_3.alanbujo.databinding.ActivityMainBinding
 import com.alanstd_3.alanbujo.ui.dialogs.AddWorkSpaceDialog
 import kotlinx.coroutines.runBlocking
@@ -15,20 +14,22 @@ import kotlinx.coroutines.runBlocking
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var repository: Repository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        setContentView(R.layout.dialog_add_work_space)
 
         window?.let {
             it.statusBarColor = ContextCompat.getColor(this@MainActivity, R.color.alan_primary)
         }
+        repository = Repository(applicationContext)
 
         configureButtons()
         configureList()
+
 
     }
 
@@ -40,9 +41,11 @@ class MainActivity : AppCompatActivity() {
                 override fun onSubmitClick(work: Work) {
                     saveNewWorkSpace(work)
                 }
+
+                override fun canSaveWork(title: String): Boolean {
+                    return repository.workExists(title)
+                }
             }
-
-
 
             dialog.show(supportFragmentManager, "")
         }
@@ -55,37 +58,23 @@ class MainActivity : AppCompatActivity() {
     private fun getAllWorkSpaces(): List<String> {
         val list = mutableListOf<String>()
 
-        val db =
-            Room.databaseBuilder(applicationContext, BUJODataBase::class.java, BUJODataBase.DB_NAME)
-                .fallbackToDestructiveMigration()
-                .build()
-
         runBlocking {
-            val allWorks = db.workDao().getAll()
+            val allWorks = repository.getAllWorks()
             if (allWorks != null && allWorks.isNotEmpty()) {
                 for (work in allWorks) {
                     list.add(work.title)
                 }
+            } else {
+                list.add(getString(R.string.text_empty))
             }
-
         }
 
         return list
     }
 
     private fun saveNewWorkSpace(work: Work) {
-
-        val db =
-            Room.databaseBuilder(applicationContext, BUJODataBase::class.java, BUJODataBase.DB_NAME)
-                .build()
-
-        runBlocking {
-            db.workDao().insert(work)
-        }
-
+        repository.saveNewWork(work)
         binding.list.adapter = buildAdapter()
-
-
     }
 
     private fun buildAdapter(): ArrayAdapter<String> {

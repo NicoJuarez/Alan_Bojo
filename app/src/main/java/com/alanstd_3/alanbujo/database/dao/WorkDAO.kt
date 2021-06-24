@@ -7,10 +7,10 @@ import com.alanstd_3.alanbujo.database.entities.Work
 interface WorkDAO {
 
     @Insert
-    suspend fun insert(task: Work): Long
+    suspend fun insert(work: Work): Long
 
     @Update
-    suspend fun update(task: Work)
+    suspend fun update(work: Work)
 
 //    @Delete
 //    suspend fun delete(task: Work)

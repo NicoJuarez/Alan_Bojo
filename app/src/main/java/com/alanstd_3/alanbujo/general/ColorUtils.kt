@@ -21,5 +21,7 @@ class ColorUtils {
 
             return ret
         }
+
+        fun getColorHex(resource: Int): String = "#" + Integer.toHexString(resource).toString()
     }
 }

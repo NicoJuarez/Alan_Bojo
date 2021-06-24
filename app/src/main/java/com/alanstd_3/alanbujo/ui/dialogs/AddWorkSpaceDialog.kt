@@ -20,6 +20,10 @@ class AddWorkSpaceDialog : BaseDialog() {
         override fun onSubmitClick(work: Work) {
             dialog?.dismiss()
         }
+
+        override fun canSaveWork(title: String): Boolean {
+            return true
+        }
     }
     private var hexColor = ""
 
@@ -51,24 +55,21 @@ class AddWorkSpaceDialog : BaseDialog() {
                     R.color.alan_green, R.color.alan_pink
                 )
                 mPicker.setColors(getListColors(listColors))
-//                mPicker.setOnChooseColorListener(object : ColorPicker.OnChooseColorListener {
-//                    override fun onChooseColor(position: Int, color: Int) {
-//
-//                    }
-//
-//                    override fun onCancel() {
-//
-//                    }
-//                })
 
                 mPicker.setOnFastChooseColorListener(object :
                     ColorPicker.OnFastChooseColorListener {
                     override fun setOnFastChooseColorListener(position: Int, color: Int) {
-                        binding.selectedColor.backgroundTintList =
-                            ContextCompat.getColorStateList(context!!, listColors[position])
-                        hexColor = ColorUtils.getColorHex(listColors[position], context!!)
-                        Log.d(TAG, "setOnFastChooseColorListener: $hexColor")
-                        mPicker.dismissDialog()
+                        if (listener.canSaveWork(binding.inputTitle.text.toString())) {
+                            context?.let { c ->
+                                binding.selectedColor.backgroundTintList =
+                                    ContextCompat.getColorStateList(c, listColors[position])
+                                hexColor = ColorUtils.getColorHex(listColors[position], context!!)
+                                Log.d(TAG, "setOnFastChooseColorListener: $hexColor")
+                            }
+                            mPicker.dismissDialog()
+                        } else {
+                            setErrorTitle(getString(R.string.text_error_title_exists))
+                        }
                     }
 
                     override fun onCancel() {
@@ -123,18 +124,14 @@ class AddWorkSpaceDialog : BaseDialog() {
         return list
     }
 
-//    fun setOnClickListener(listener: View.OnClickListener?) {
-//        if (listener == null) {
-//            binding.submitButtom.setOnClickListener {
-//                dialog?.dismiss()
-//            }
-//        } else {
-//            binding.submitButtom.setOnClickListener(listener)
-//        }
-//    }
+    private fun setErrorTitle(error: String?) {
+        binding.inputTitle.error = error
+        binding.inputTitle.requestFocus()
+    }
 
     interface OnSubmitListener {
         fun onSubmitClick(work: Work)
+        fun canSaveWork(title: String): Boolean
     }
 
 
