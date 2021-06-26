@@ -5,7 +5,7 @@
     android:id="@+id/layout_fragment_work_space"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/alan_primary">
+    android:background="@color/alan_default">
 
     <ImageView
         android:id="@+id/exit_button"
@@ -13,10 +13,10 @@
         android:layout_height="36dp"
         android:layout_margin="12dp"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/button_1"
-        app:layout_constraintTop_toTopOf="parent"
         android:rotation="45"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:src="@drawable/button_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/root"
@@ -33,21 +33,24 @@
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:ellipsize="end"
         android:fontFamily="@font/amatic_sc_regular"
+        android:maxLines="1"
+        android:paddingEnd="8dp"
+        android:shadowColor="@color/gray_67"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="3"
         android:textColor="@color/white"
         android:textSize="96sp"
         android:textStyle="bold"
-        android:shadowColor="@color/gray_67"
-        android:shadowRadius="3"
-        android:shadowDx="2"
-        android:shadowDy="2"
         app:layout_constraintStart_toStartOf="@id/root"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/root"
-        android:paddingEnd="8dp"
-        tools:text="Fiverr" />
+        tools:text="verde manzana" />
 
     <TextView
         android:id="@+id/subtitle"
@@ -65,13 +68,29 @@
         android:id="@+id/tasks_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:fontFamily="@font/amatic_sc_regular"
         android:text="@string/header_task_caption"
         android:textColor="@color/white"
         android:textSize="28sp"
-        android:layout_marginTop="12dp"
         app:layout_constraintStart_toStartOf="@id/title"
         app:layout_constraintTop_toBottomOf="@id/subtitle" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/add_task_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/BujoButton"
+        app:layout_constraintTop_toTopOf="@id/tasks_header"
+        app:layout_constraintBottom_toBottomOf="@id/tasks_header"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="4dp"
+        android:text="@string/button_add_task"
+        android:textAlignment="center"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/black"
+        android:layout_marginEnd="16dp"
+        />
 
     <View
         android:id="@+id/tasks_underline"
@@ -99,6 +118,22 @@
         android:textSize="28sp"
         app:layout_constraintStart_toStartOf="@id/title"
         app:layout_constraintTop_toBottomOf="@id/tasks_list" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/create_ws_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/BujoButton"
+        app:layout_constraintTop_toTopOf="@id/works_header"
+        app:layout_constraintBottom_toBottomOf="@id/works_header"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="4dp"
+        android:text="@string/button_create_work_space"
+        android:textAlignment="center"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/black"
+        android:layout_marginEnd="16dp"
+        />
 
     <View
         android:id="@+id/works_underline"
@@ -151,23 +186,21 @@
         android:id="@+id/back_button"
         android:layout_width="82dp"
         android:layout_height="48dp"
-        android:src="@drawable/button_back_1"
-        app:layout_constraintTop_toTopOf="@id/add_button_layout"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="8dp"
         android:contentDescription="@string/app_name"
-        />
+        android:src="@drawable/button_back_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/add_button_layout" />
 
     <ImageView
         android:id="@+id/submit_button"
         android:layout_width="82dp"
         android:layout_height="48dp"
-        android:src="@drawable/button_submit_1"
-        app:layout_constraintTop_toTopOf="@id/add_button_layout"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="8dp"
         android:contentDescription="@string/app_name"
-        />
+        android:src="@drawable/button_submit_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/add_button_layout" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/toast_container"

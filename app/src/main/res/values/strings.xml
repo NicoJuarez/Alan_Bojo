@@ -3,13 +3,26 @@
     <!--Headers-->
     <string name="header_task_caption">Tasks</string>
     <string name="header_work_caption">Work Spaces</string>
+    <string name="header_new_task_header">New Tasks</string>
 
     <!--Text-->
     <string name="text_empty">Empty</string>
+    <string name="text_view_steps">See Steps</string>
     <!--Text_Error-->
     <string name="text_error_title_exists">Title already exists</string>
+
+    <!--Hint-->
+    <string name="hint_task_description">Task description</string>
 
 
     <!--Button-->
     <string name="button_add_work_space">Add work space</string>
+    <string name="button_add_task">Add new task</string>
+    <string name="button_add_to_list">Add to List</string>
+    <string name="button_create_work_space">Create Work Space</string>
+    <string name="button_select_color">Select</string>
+    <string name="button_submit">Submit</string>
+    <string name="button_edit">Edit</string>
+
+    <string name="button_test">Test</string>
 </resources>

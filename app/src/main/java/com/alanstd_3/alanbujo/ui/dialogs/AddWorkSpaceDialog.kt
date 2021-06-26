@@ -1,6 +1,5 @@
 package com.alanstd_3.alanbujo.ui.dialogs
 
-import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
@@ -13,7 +12,6 @@ import com.alanstd_3.alanbujo.database.entities.Work
 import com.alanstd_3.alanbujo.databinding.DialogAddWorkSpaceBinding
 import com.alanstd_3.alanbujo.general.ColorUtils
 import petrov.kristiyan.colorpicker.ColorPicker
-import java.lang.IllegalArgumentException
 
 class AddWorkSpaceDialog : BaseDialog() {
 
@@ -31,6 +29,7 @@ class AddWorkSpaceDialog : BaseDialog() {
 
     companion object {
         const val TAG = "WS_DIALOG::"
+
     }
 
     override fun onCreateView(
@@ -55,9 +54,13 @@ class AddWorkSpaceDialog : BaseDialog() {
 
                 val listColors = listOf(
                     R.color.alan_aqua, R.color.alan_yellow,
-                    R.color.alan_green, R.color.alan_pink
+                    R.color.alan_green, R.color.alan_pink,
+                    R.color.alan_blue, R.color.alan_orange,
+                    R.color.alan_red, R.color.alan_light_blue,
+                    R.color.alan_grape
                 )
                 mPicker.setColors(getListColors(listColors))
+                mPicker.setColorButtonDrawable(R.drawable.shape_circle)
 
                 mPicker.setOnFastChooseColorListener(object :
                     ColorPicker.OnFastChooseColorListener {
@@ -139,7 +142,7 @@ class AddWorkSpaceDialog : BaseDialog() {
 
     private fun setDefaultColor() {
         context?.let { c ->
-            val color = ContextCompat.getColorStateList(c, R.color.alan_primary)
+            val color = ContextCompat.getColorStateList(c, R.color.alan_default)
             color?.let { cl ->
                 binding.selectedColor.backgroundTintList = cl
                 hexColor = ColorUtils.getColorHex(cl.defaultColor)

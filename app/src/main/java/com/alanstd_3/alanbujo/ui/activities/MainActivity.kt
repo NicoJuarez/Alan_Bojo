@@ -18,6 +18,7 @@ import com.alanstd_3.alanbujo.R
 import com.alanstd_3.alanbujo.database.entities.Work
 import com.alanstd_3.alanbujo.database.repository.Repository
 import com.alanstd_3.alanbujo.databinding.ActivityMainBinding
+import com.alanstd_3.alanbujo.ui.dialogs.AddTaskDialog
 import com.alanstd_3.alanbujo.ui.dialogs.AddWorkSpaceDialog
 import kotlinx.coroutines.runBlocking
 
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var repository: Repository
 
-    companion object{
+    companion object {
         private const val TAG = "_MAIN_::"
     }
 
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         window?.let {
-            it.statusBarColor = ContextCompat.getColor(this@MainActivity, R.color.alan_primary)
+            it.statusBarColor = ContextCompat.getColor(this@MainActivity, R.color.alan_default)
         }
         repository = Repository(applicationContext)
 
@@ -63,6 +64,12 @@ class MainActivity : AppCompatActivity() {
 
             dialog.show(supportFragmentManager, "")
         }
+        binding.taskButton.setOnClickListener{
+            val dialog = AddTaskDialog(4)
+
+            dialog.show(supportFragmentManager, "")
+        }
+        binding.taskButton.visibility = View.GONE
     }
 
     private fun configureList() {
@@ -93,7 +100,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun buildAdapter(): MyAdapter {
 
-        return MyAdapter(applicationContext, R.layout.item_work_space, repository.getAllWorks()
+        return MyAdapter(
+            applicationContext, R.layout.item_work_space, repository.getAllWorks()
         ) {
             Log.d(TAG, "buildAdapter: touched!")
             val i = Intent(applicationContext, WorkSpaceActivity::class.java)
@@ -120,16 +128,15 @@ class MainActivity : AppCompatActivity() {
                 view.findViewById<TextView>(R.id.title).text = work.title
                 view.findViewById<TextView>(R.id.subtitle).text = work.subtitle
                 view.findViewById<TextView>(R.id.description).text = work.color
+
+                val cardView = view.findViewById<CardView>(R.id.card_ws)
                 context?.let {
-                    if (work.color.isNotEmpty()) {
-                        val cardView = view.findViewById<CardView>(R.id.card_ws)
+                    if (work.color.isNotEmpty())
                         cardView.setCardBackgroundColor(
                             ColorStateList.valueOf(Color.parseColor(work.color))
                         )
-                        cardView.setOnClickListener(listener)
-                    }
-
                 }
+                cardView.setOnClickListener(listener)
             }
             return view
         }

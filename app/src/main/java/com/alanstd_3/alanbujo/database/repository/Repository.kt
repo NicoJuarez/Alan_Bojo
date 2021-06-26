@@ -2,6 +2,7 @@ package com.alanstd_3.alanbujo.database.repository
 
 import android.content.Context
 import androidx.room.Room
+import com.alanstd_3.alanbujo.database.entities.Task
 import com.alanstd_3.alanbujo.database.entities.Work
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -46,6 +47,21 @@ class Repository(context: Context) {
     fun getWorkByID(id: Long): Work {
         return runBlocking(Dispatchers.Default) {
             return@runBlocking db.workDao().getByID(id)
+        }
+    }
+
+    fun saveNewTasks(tasks: List<Task>) {
+        runBlocking {
+            val dao = db.taskDao()
+            for (t in tasks)
+                dao.insert(t)
+        }
+    }
+
+    fun getAllTasksByParent(parentID: Long): List<Task> {
+        return runBlocking {
+            val dao = db.taskDao()
+            return@runBlocking dao.getByParent(parentID)
         }
     }
 
