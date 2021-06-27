@@ -2,6 +2,7 @@ package com.alanstd_3.alanbujo.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,10 @@ import com.alanstd_3.alanbujo.database.entities.Habit
 import com.alanstd_3.alanbujo.databinding.FragmentHabitBinding
 
 class HabitFragment : GeneralFragment() {
+
+    companion object{
+        private const val TAG = "HABIT::"
+    }
 
     private lateinit var binding: FragmentHabitBinding
     private val itemList = mutableListOf<ImageView>()
@@ -48,17 +53,18 @@ class HabitFragment : GeneralFragment() {
 //            binding.title.text = habit.title
 //            binding.description.text = habit.description
 //            fillItems(minCount, goalCount, extraCount)
-            habit = Habit()
+            habit = Habit(
+                title = "Drink water!!", description = "#DrinkWaterChallenge",
+                minGoal = 2, goal = 5, extra = 0, currentDone = 3
+            )
 
-            binding.title.text = "Drink water!!"
-            binding.description.text = "#DinkWaterChallenge"
-            val minCount = 2
-            val goal = 5
-            val extra = 0
-            val currentDone = 5
+            habit?.let { h ->
+                binding.title.text = h.title
+                binding.description.text = h.description
 
-            fillItems(minCount, goal - minCount, extra)
-            setChecked(currentDone)
+                fillItems(h.minGoal, h.goal - h.minGoal, h.extra)
+                setChecked(h.currentDone)
+            }
         }
 
     }
@@ -154,6 +160,7 @@ class HabitFragment : GeneralFragment() {
                 else if (i >= count && itemList[i].isSelected)
                     itemList[i].callOnClick()
             }
+            normalColor()
         } else {
             goalAccomplished()
         }
@@ -168,8 +175,27 @@ class HabitFragment : GeneralFragment() {
         for (i in itemList) {
             context?.let {
                 i.imageTintList = ContextCompat.getColorStateList(it, R.color.alan_yellow)
-                if(!i.isSelected)
+                if (!i.isSelected)
                     i.callOnClick()
+            }
+        }
+    }
+
+    private fun normalColor() {
+        habit?.let {
+            for (i in 0 until itemList.size ) {
+                if (i < it.minGoal)
+                    context?.let{c ->
+                        itemList[i].imageTintList = ContextCompat.getColorStateList(c, R.color.alan_blue)
+                    }
+                else {
+                    context?.let { c ->
+                        itemList[i].imageTintList =
+                            ContextCompat.getColorStateList(c, R.color.white)
+                    }
+                    Log.d(TAG, "normalColor: count: $i")
+                }
+
             }
         }
     }

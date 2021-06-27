@@ -11,13 +11,13 @@ data class Habit(
     @ColumnInfo(name = DESCRIPTION)
     var description: String = "",
     @ColumnInfo(name = MIN_GOAL)
-    var minGoal: String = "",
+    var minGoal: Int = 0,
     @ColumnInfo(name = GOAL)
-    var goal: String = "",
+    var goal: Int = 0,
     @ColumnInfo(name = EXTRA)
-    var extra: String = "",
+    var extra: Int = 0,
     @ColumnInfo(name = CURRENT_DONE)
-    var currentDone: String = "",
+    var currentDone: Int = 0,
     @ColumnInfo(name = NOTE_1)
     var note1: String = "",
     @ColumnInfo(name = NOTE_2)
