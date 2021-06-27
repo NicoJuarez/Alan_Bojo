@@ -10,14 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AlanBojo">
         <activity android:name="com.alanstd_3.alanbujo.ui.activities.MainActivity">
+
+        </activity>
+        <activity android:name=".ui.activities.WorkSpaceActivity" />
+        <activity android:name="com.alanstd_3.alanbujo.ui.activities.DashboardActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".ui.activities.WorkSpaceActivity"/>
     </application>
 
 </manifest>

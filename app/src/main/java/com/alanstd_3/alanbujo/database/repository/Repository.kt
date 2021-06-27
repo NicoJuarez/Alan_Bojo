@@ -2,6 +2,7 @@ package com.alanstd_3.alanbujo.database.repository
 
 import android.content.Context
 import androidx.room.Room
+import com.alanstd_3.alanbujo.database.entities.Habit
 import com.alanstd_3.alanbujo.database.entities.Task
 import com.alanstd_3.alanbujo.database.entities.Work
 import kotlinx.coroutines.Dispatchers
@@ -62,6 +63,12 @@ class Repository(context: Context) {
         return runBlocking {
             val dao = db.taskDao()
             return@runBlocking dao.getByParent(parentID)
+        }
+    }
+
+    fun getHabit(id: Long): Habit {
+        return runBlocking (Dispatchers.Default){
+            return@runBlocking db.habitDao().getHabit(id)
         }
     }
 
