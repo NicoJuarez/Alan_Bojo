@@ -68,7 +68,7 @@ class Repository(context: Context) {
 
     fun getHabit(id: Long): Habit {
         return runBlocking (Dispatchers.Default){
-            return@runBlocking db.habitDao().getHabit(id)
+            return@runBlocking db.habitDao().getById(id)
         }
     }
 
