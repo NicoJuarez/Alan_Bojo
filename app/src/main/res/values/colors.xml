@@ -13,6 +13,7 @@
     <!--Pastel Colors-->
     <color name="alan_cream">#FFF4DA</color>
     <color name="pastel_orange">#FFEFC9</color>
+    <color name="pastel_green">#94DA98</color>
 
     <!--Hot Colors-->
     <color name="alan_pink">#ED2675</color>
@@ -25,6 +26,7 @@
     <color name="alan_orange">#DF5D07</color>
     <color name="alan_violet">#590FE3</color>
     <color name="alan_grape">#7A1A54</color>
+
 
     <!--Temas-->
     <color name="alan_default">@color/alan_yellow</color>

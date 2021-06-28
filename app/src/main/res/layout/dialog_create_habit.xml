@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:background="@color/black">
 
     <androidx.cardview.widget.CardView
@@ -21,13 +21,13 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/input_title"
+                android:id="@+id/habit_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autofillHints="Cap sentence."
                 android:fontFamily="@font/amatic_sc_regular"
                 android:gravity="center"
-                android:hint="@string/hint_work_space_title"
+                android:hint="@string/hint_habit_name"
                 android:inputType="textCapSentences"
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray_AA"
@@ -40,61 +40,115 @@
                 />
 
             <EditText
-                android:id="@+id/input_subtitle"
+                android:id="@+id/goal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autofillHints="Cap sentence."
                 android:fontFamily="@font/amatic_sc_regular"
                 android:gravity="center"
-                android:hint="@string/hint_work_space_subtitle"
-                android:inputType="textCapSentences"
+                android:hint="@string/hint_habit_goal"
+                android:inputType="number"
                 android:textColor="@color/gray_67"
                 android:textColorHint="@color/gray_AA"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/input_title" />
+                app:layout_constraintEnd_toStartOf="@id/min_goal"
+                app:layout_constraintTop_toBottomOf="@id/habit_name" />
 
-            <TextView
-                android:id="@+id/parent_caption"
+            <EditText
+                android:id="@+id/min_goal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:autofillHints="Cap sentence."
                 android:fontFamily="@font/amatic_sc_regular"
-                android:paddingHorizontal="12dp"
-                android:text="@string/hint_parent"
-                android:textColor="@color/black"
-                android:textSize="14sp"
+                android:gravity="center"
+                android:hint="@string/hint_habit_goal"
+                android:inputType="number"
+                android:textColor="@color/gray_67"
+                android:textColorHint="@color/gray_AA"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                android:visibility="gone"
+                app:layout_constraintStart_toEndOf="@id/goal"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/input_subtitle" />
+                app:layout_constraintBottom_toBottomOf="@id/goal" />
 
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/spinner"
+            <LinearLayout
+                android:id="@+id/days"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/parent_caption"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/goal"
+                android:gravity="center_horizontal"
+                android:layout_marginVertical="12dp"
+                >
 
-                />
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mo"
+                    android:checked="true"
+                    android:enabled="false"
+                    />
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tu"
+                    android:checked="true"
+                    android:enabled="false"
+                    />
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="We"
+                    android:checked="true"
+                    android:enabled="false"
+                    />
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Th"
+                    android:checked="true"
+                    android:enabled="false"
+                    />
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fr"
+                    android:checked="true"
+                    android:enabled="false"
+                    />
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sa"
+                    android:checked="true"
+                    android:enabled="false"
+                    />
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Su"
+                    android:checked="true"
+                    android:enabled="false"
+                    />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/layout_select_color"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                app:layout_constraintTop_toBottomOf="@id/spinner">
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@id/days">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/add_color_button"
                     style="@style/BujoButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/button_select_color"
+                    android:text="select color"
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <View
@@ -114,7 +168,7 @@
                 style="@style/BujoButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/button_submit"
+                android:text="submit"
                 android:padding="12dp"
                 android:layout_marginTop="8dp"
                 android:backgroundTint="@color/alan_aqua"
@@ -126,6 +180,5 @@
 
 
     </androidx.cardview.widget.CardView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

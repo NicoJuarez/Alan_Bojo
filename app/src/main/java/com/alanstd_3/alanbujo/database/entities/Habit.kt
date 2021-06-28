@@ -24,6 +24,10 @@ data class Habit(
     var note2: String = "",
     @ColumnInfo(name = NOTE_3)
     var note3: String = "",
+    @ColumnInfo(name = DATE)
+    var date: Long = 0,
+    @ColumnInfo(name = COLOR)
+    var color: String = "",
 ) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = ID)
@@ -45,6 +49,8 @@ data class Habit(
         const val NOTE_1 = "n_1"
         const val NOTE_2 = "n_2"
         const val NOTE_3 = "n_3"
+        const val DATE = "date"
+        const val COLOR = "color"
 
     }
 }

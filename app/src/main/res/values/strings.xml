@@ -13,6 +13,12 @@
 
     <!--Hint-->
     <string name="hint_task_description">Task description</string>
+    <string name="hint_work_space_title">Title of workspace</string>
+    <string name="hint_work_space_subtitle">subtitle (optional)</string>
+    <string name="hint_parent">Parent</string>
+    <string name="hint_habit_name">Habit name</string>
+    <string name="hint_habit_goal">Goal (count)</string>
+    <string name="hint_habit_min_goal">Min Goal (count)</string>
 
 
     <!--Button-->
@@ -20,7 +26,7 @@
     <string name="button_add_task">Add new task</string>
     <string name="button_add_to_list">Add to List</string>
     <string name="button_create_work_space">Create Work Space</string>
-    <string name="button_select_color">Select</string>
+    <string name="button_select_color">Select Color</string>
     <string name="button_submit">Submit</string>
     <string name="button_edit">Edit</string>
 
