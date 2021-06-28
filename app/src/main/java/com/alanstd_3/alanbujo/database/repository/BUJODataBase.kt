@@ -11,7 +11,7 @@ import com.alanstd_3.alanbujo.database.entities.Work
 
 @Database(
     entities = [Task::class, Work::class, Habit::class],
-    version = 4,
+    version = 5,
     exportSchema = false
 )
 abstract class BUJODataBase : RoomDatabase() {

@@ -30,4 +30,7 @@ interface HabitDAO {
     @Query("select * from ${Habit.TABLE_HABITS} where _id = :id")
     suspend fun getById(id: Long): Habit
 
+    @Query("select * from ${Habit.TABLE_HABITS} where enabled = 1")
+    suspend fun getAllEnabled(): List<Habit>
+
 }

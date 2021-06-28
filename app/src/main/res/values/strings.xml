@@ -33,6 +33,8 @@
     <string name="button_submit">Submit</string>
     <string name="button_edit">Edit</string>
     <string name="button_add_habit">New Habit</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="button_confirm">Confirm</string>
 
     <string name="button_test">Test</string>
 </resources>

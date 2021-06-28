@@ -44,7 +44,7 @@ class DashboardFragment : GeneralFragment() {
         if (context == null)
             return
         val repo = Repository(requireContext().applicationContext)
-        val list = repo.getAllHabits()
+        val list = repo.getAllEnabledHabits()
         list?.let {
             val adapter = HabitAdapter(it)
             adapter.listener = object : HabitViewHolder.OnVHHabitListener {
@@ -91,7 +91,7 @@ class DashboardFragment : GeneralFragment() {
             val repo = Repository(it)
             repo.saveHabit(habit)
             Log.d(TAG, "saveHabit| Saving | $habit ")
-            val habits = repo.getAllHabits()
+            val habits = repo.getAllEnabledHabits()
             habits?.let { lh ->
                 (binding.habitsRecycler.adapter as HabitAdapter).update(lh)
             }

@@ -18,6 +18,7 @@ import com.alanstd_3.alanbujo.database.entities.Habit
 import com.alanstd_3.alanbujo.database.repository.Repository
 import com.alanstd_3.alanbujo.databinding.FragmentHabitBinding
 import com.alanstd_3.alanbujo.ui.dialogs.AddHabitDialog
+import com.alanstd_3.alanbujo.ui.dialogs.ConfirmDialog
 
 class HabitFragment : GeneralFragment() {
 
@@ -33,7 +34,7 @@ class HabitFragment : GeneralFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentHabitBinding.bind(
             inflater.inflate(R.layout.fragment_habit, container, false)
         )
@@ -116,6 +117,8 @@ class HabitFragment : GeneralFragment() {
         binding.addNoteButton.setOnClickListener { showAddNoteDialog() }
         binding.submitButton.setOnClickListener { submit() }
         binding.editButton.setOnClickListener { buildEditWindow() }
+        binding.deleteButton.setOnClickListener { showDeleteMessage() }
+        binding.deleteButton.setOnLongClickListener { buildDeleteWindow() }
     }
 
     private fun showAddNoteDialog() {
@@ -156,19 +159,38 @@ class HabitFragment : GeneralFragment() {
 
     private fun setChecked(count: Int) {
 
-        if (count > itemList.size) {
-            addExtraItems(count - itemList.size)
-        } else if (count < itemList.size) {
-            for (i in 0 until itemList.size) {
-//                itemList[i].isSelected = (i <= count)
-                if (i < count && !itemList[i].isSelected)
-                    itemList[i].callOnClick()
-                else if (i >= count && itemList[i].isSelected)
-                    itemList[i].callOnClick()
+//        if (count > itemList.size) {
+//            addExtraItems(count - itemList.size)
+//        } else if (count < itemList.size) {
+//            for (i in 0 until itemList.size) {
+////                itemList[i].isSelected = (i <= count)
+//                if (i < count && !itemList[i].isSelected)
+//                    itemList[i].callOnClick()
+//                else if (i >= count && itemList[i].isSelected)
+//                    itemList[i].callOnClick()
+//            }
+//            normalColor()
+//        } else {
+//            goalAccomplished()
+//        }
+
+        when {
+            (count > itemList.size) -> {
+                addExtraItems(count - itemList.size)
             }
-            normalColor()
-        } else {
-            goalAccomplished()
+            (count < itemList.size) -> {
+                for (i in 0 until itemList.size) {
+//                itemList[i].isSelected = (i <= count)
+                    if (i < count && !itemList[i].isSelected)
+                        itemList[i].callOnClick()
+                    else if (i >= count && itemList[i].isSelected)
+                        itemList[i].callOnClick()
+                }
+                normalColor()
+            }
+            else -> {
+                goalAccomplished()
+            }
         }
 
     }
@@ -242,8 +264,8 @@ class HabitFragment : GeneralFragment() {
 
     private fun rebuildContent(newHabit: Habit) {
 //        if (newHabit.goal != habit?.goal || newHabit.minGoal != habit?.minGoal) {
-            this.itemList.clear()
-            binding.itemsList.removeAllViews()
+        this.itemList.clear()
+        binding.itemsList.removeAllViews()
 //        }
 
         context?.let {
@@ -256,6 +278,33 @@ class HabitFragment : GeneralFragment() {
                 fillContent()
             }
         }
+    }
+
+    private fun showDeleteMessage() {
+        context?.let {
+            Toast.makeText(it, "Long press to delete", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun buildDeleteWindow(): Boolean {
+        val dialog = ConfirmDialog()
+
+        dialog.title = "Delete Habit"
+        dialog.content = "do you want to delete ${habit!!.title}?"
+        dialog.confirmColor = ContextCompat.getColor(requireContext(), R.color.alan_red)
+        dialog.confirmListener {
+            context?.let {
+                val repo = Repository(it)
+                habit?.let { hab ->
+                    hab.enabled = false
+                    repo.updateHabit(hab)
+                }
+                findNavController().popBackStack()
+            }
+        }
+
+        dialog.show(childFragmentManager, "")
+        return true
     }
 
 

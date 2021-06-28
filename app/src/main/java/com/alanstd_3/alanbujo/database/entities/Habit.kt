@@ -32,6 +32,8 @@ data class Habit(
     var color: String = "",
     @ColumnInfo(name = DAYS)    //1,2,3,4,5,6,7 ; where 1 => SUNDAY...
     var days: String = "",
+    @ColumnInfo(name = ENABLED)    //1,2,3,4,5,6,7 ; where 1 => SUNDAY...
+    var enabled: Boolean = true,
 ) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = ID)
@@ -56,7 +58,7 @@ data class Habit(
         const val DATE = "date"
         const val COLOR = "color"
         const val DAYS = "days"
-
+        const val ENABLED = "enabled"
     }
 
     override fun toString(): String {

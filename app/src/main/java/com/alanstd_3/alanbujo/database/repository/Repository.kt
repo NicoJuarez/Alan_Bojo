@@ -90,4 +90,11 @@ class Repository(context: Context) {
         }
     }
 
+    fun getAllEnabledHabits(): List<Habit> {
+        return runBlocking(Dispatchers.Default) {
+            return@runBlocking db.habitDao().getAllEnabled()
+        }
+    }
+
+
 }
