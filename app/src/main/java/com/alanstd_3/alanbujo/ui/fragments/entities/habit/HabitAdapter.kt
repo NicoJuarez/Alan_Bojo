@@ -6,7 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alanstd_3.alanbujo.R
 import com.alanstd_3.alanbujo.database.entities.Habit
 
-class HabitAdapter(private val habits: List<Habit>) : RecyclerView.Adapter<HabitViewHolder>() {
+class HabitAdapter(
+    private var habits: List<Habit>,
+    var listener: HabitViewHolder.OnVHHabitListener? = null
+) : RecyclerView.Adapter<HabitViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HabitViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.vh_habit, parent, false)
         return HabitViewHolder(view)
@@ -14,14 +18,17 @@ class HabitAdapter(private val habits: List<Habit>) : RecyclerView.Adapter<Habit
 
     override fun onBindViewHolder(holder: HabitViewHolder, position: Int) {
         holder.fillContent(habits[position])
+        holder.listener = this.listener
     }
 
     override fun getItemCount(): Int {
         return habits.size
     }
 
-    fun update(){
+    fun update(habits: List<Habit>) {
+        this.habits = habits
         notifyDataSetChanged()
-        notif
     }
+
+
 }

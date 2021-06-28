@@ -9,7 +9,11 @@
         android:id="@+id/nav_habit_fragment"
         android:name="com.alanstd_3.alanbujo.ui.fragments.HabitFragment"
         android:label="HabitFragment"
-        tools:layout="@layout/fragment_habit"/>
+        tools:layout="@layout/fragment_habit">
+        <argument
+            android:name="id"
+            app:argType="long" />
+    </fragment>
     <fragment
         android:id="@+id/nav_test_fragment"
         android:name="com.alanstd_3.alanbujo.ui.fragments.test.TestFragment"
@@ -19,7 +23,11 @@
         android:id="@+id/nav_dashboard"
         android:name="com.alanstd_3.alanbujo.ui.fragments.DashboardFragment"
         android:label="Dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_nav_dashboard_to_nav_habit_fragment"
+            app:destination="@id/nav_habit_fragment" />
+    </fragment>
 
 
 </navigation>

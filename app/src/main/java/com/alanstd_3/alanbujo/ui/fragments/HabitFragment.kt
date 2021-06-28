@@ -1,7 +1,8 @@
 package com.alanstd_3.alanbujo.ui.fragments
 
-import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,13 +11,15 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import com.alanstd_3.alanbujo.R
 import com.alanstd_3.alanbujo.database.entities.Habit
+import com.alanstd_3.alanbujo.database.repository.Repository
 import com.alanstd_3.alanbujo.databinding.FragmentHabitBinding
 
 class HabitFragment : GeneralFragment() {
 
-    companion object{
+    companion object {
         private const val TAG = "HABIT::"
     }
 
@@ -41,29 +44,28 @@ class HabitFragment : GeneralFragment() {
 
     private fun fillContent() {
 
-//        val habitID = arguments?.getLong("habit", -1L)
-//
-//        if (habitID == null || habitID == -1L)
-//            return
+        arguments?.let { bundle ->
+            val args = HabitFragmentArgs.fromBundle(bundle)
+            if (args.id == 0L)
+                return@let
 
-        context?.let {
-//            val repo = Repository(it.applicationContext)
-//            val habit = repo.getHabit(habitID)
 
-//            binding.title.text = habit.title
-//            binding.description.text = habit.description
-//            fillItems(minCount, goalCount, extraCount)
-            habit = Habit(
-                title = "Drink water!!", description = "#DrinkWaterChallenge",
-                minGoal = 2, goal = 5, extra = 0, currentDone = 3
-            )
+            context?.let {
+                val repo = Repository(it.applicationContext)
+                habit = repo.getHabit(args.id)
 
-            habit?.let { h ->
-                binding.title.text = h.title
-                binding.description.text = h.description
+//            habit = Habit(
+//                title = "Drink water!!", description = "#DrinkWaterChallenge",
+//                minGoal = 2, goal = 5, extra = 0, currentDone = 3
+//            )
 
-                fillItems(h.minGoal, h.goal - h.minGoal, h.extra)
-                setChecked(h.currentDone)
+                habit?.let { h ->
+                    binding.title.text = h.title
+                    binding.description.text = h.description
+
+                    fillItems(h.minGoal, h.goal - h.minGoal, h.extra)
+                    setChecked(h.currentDone)
+                }
             }
         }
 
@@ -122,17 +124,22 @@ class HabitFragment : GeneralFragment() {
     }
 
     private fun submit() {
-        //  TODO: Guardar los dato en la memoria._
+        val i = getItemsSelected()
+        saveCurrentData(i)
 
         // probando seleccionados
         context?.let {
-            val i = getItemsSelected()
             Toast.makeText(
                 it, "Seleccionados: $i",
                 Toast.LENGTH_SHORT
             ).show()
             setChecked(i)
         }
+
+        binding.submitButton.visibility = View.GONE
+        Handler(Looper.getMainLooper()).postDelayed({
+            findNavController().popBackStack()
+        }, 1000)
 
 
     }
@@ -183,10 +190,11 @@ class HabitFragment : GeneralFragment() {
 
     private fun normalColor() {
         habit?.let {
-            for (i in 0 until itemList.size ) {
+            for (i in 0 until itemList.size) {
                 if (i < it.minGoal)
-                    context?.let{c ->
-                        itemList[i].imageTintList = ContextCompat.getColorStateList(c, R.color.alan_blue)
+                    context?.let { c ->
+                        itemList[i].imageTintList =
+                            ContextCompat.getColorStateList(c, R.color.alan_blue)
                     }
                 else {
                     context?.let { c ->
@@ -198,6 +206,23 @@ class HabitFragment : GeneralFragment() {
 
             }
         }
+    }
+
+    private fun saveCurrentData(count: Int) {
+
+        context?.let { c ->
+            val repo = Repository(c)
+            habit?.let { h ->
+                h.currentDone = count
+                repo.updateHabit(h)
+                Log.d(TAG, "saveCurrentData: $h")
+            }
+        }
+
+        if (habit == null) {
+            Log.d(TAG, "saveCurrentData: (No se guardó)")
+        }
+
     }
 
 

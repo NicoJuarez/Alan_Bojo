@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavAction
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alanstd_3.alanbujo.R
 import com.alanstd_3.alanbujo.database.entities.Habit
@@ -12,6 +14,7 @@ import com.alanstd_3.alanbujo.database.repository.Repository
 import com.alanstd_3.alanbujo.databinding.FragmentDashboardBinding
 import com.alanstd_3.alanbujo.ui.dialogs.AddHabitDialog
 import com.alanstd_3.alanbujo.ui.fragments.entities.habit.HabitAdapter
+import com.alanstd_3.alanbujo.ui.fragments.entities.habit.HabitViewHolder
 
 class DashboardFragment : GeneralFragment() {
 
@@ -39,10 +42,15 @@ class DashboardFragment : GeneralFragment() {
     private fun fillHabitList() {
         if (context == null)
             return
-
-        val list = Repository(requireContext().applicationContext).getAllHabits()
+        val repo = Repository(requireContext().applicationContext)
+        val list = repo.getAllHabits()
         list?.let {
             val adapter = HabitAdapter(it)
+            adapter.listener = object : HabitViewHolder.OnVHHabitListener {
+                override fun onClick(id: Long) {
+                    navigateToHabit(id)
+                }
+            }
 
             binding.habitsRecycler.apply {
                 context?.let {
@@ -74,13 +82,21 @@ class DashboardFragment : GeneralFragment() {
 
     private fun saveHabit(habit: Habit) {
         context?.let {
-            Repository(it).saveHabit(habit)
+            val repo = Repository(it)
+            repo.saveHabit(habit)
             Log.d(TAG, "saveHabit| Saving | $habit ")
-            binding.habitsRecycler.adapter?.update()
+            val habits = repo.getAllHabits()
+            habits?.let { lh ->
+                (binding.habitsRecycler.adapter as HabitAdapter).update(lh)
+            }
         }
     }
 
+    private fun navigateToHabit(id: Long) {
+        val action = DashboardFragmentDirections.actionNavDashboardToNavHabitFragment(id)
 
+        findNavController().navigate(action)
+    }
 
 
 }

@@ -84,4 +84,10 @@ class Repository(context: Context) {
         }
     }
 
+    fun updateHabit(habit: Habit) {
+        return runBlocking(Dispatchers.Default) {
+            return@runBlocking db.habitDao().update(habit)
+        }
+    }
+
 }
