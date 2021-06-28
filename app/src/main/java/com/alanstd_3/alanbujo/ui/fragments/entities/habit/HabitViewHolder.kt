@@ -27,16 +27,19 @@ class HabitViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         when {
             habit.goal == habit.currentDone -> {
                 binding.goalCaption.visibility = View.VISIBLE
+                binding.currentDoneCaption.visibility = View.INVISIBLE
             }
-            (habit.minGoal!= 0) && (habit.minGoal <= habit.currentDone) ->{
+            (habit.minGoal != 0) && (habit.minGoal <= habit.currentDone) -> {
                 binding.goalCaption.visibility = View.VISIBLE
-                itemView.context?.let{
-                    binding.goalCaption.imageTintList=
+                itemView.context?.let {
+                    binding.goalCaption.imageTintList =
                         ContextCompat.getColorStateList(it, R.color.alan_cream)
                 }
             }
         }
 
+        val currentDone = "${habit.currentDone}/${habit.goal}(${habit.minGoal})"
+        binding.currentDoneCaption.text = currentDone
 
         itemView.setOnClickListener { listener?.onClick(id) }
     }

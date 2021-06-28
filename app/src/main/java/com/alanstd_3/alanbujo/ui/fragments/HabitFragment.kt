@@ -241,10 +241,10 @@ class HabitFragment : GeneralFragment() {
     }
 
     private fun rebuildContent(newHabit: Habit) {
-        if (newHabit.goal != habit?.goal || newHabit.minGoal != habit?.minGoal) {
+//        if (newHabit.goal != habit?.goal || newHabit.minGoal != habit?.minGoal) {
             this.itemList.clear()
             binding.itemsList.removeAllViews()
-        }
+//        }
 
         context?.let {
             val repo = Repository(it.applicationContext)

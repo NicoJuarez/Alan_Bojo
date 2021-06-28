@@ -1,14 +1,16 @@
 package com.alanstd_3.alanbujo.ui.dialogs
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import com.alanstd_3.alanbujo.R
 import com.alanstd_3.alanbujo.database.entities.Habit
 import com.alanstd_3.alanbujo.databinding.DialogCreateHabitBinding
 import com.alanstd_3.alanbujo.general.ColorUtils
+import petrov.kristiyan.colorpicker.ColorPicker
 import java.util.*
 
 class AddHabitDialog(private val habit: Habit = Habit()) : BaseDialog() {
@@ -38,12 +40,15 @@ class AddHabitDialog(private val habit: Habit = Habit()) : BaseDialog() {
             if (title.isNotBlank()) binding.habitName.setText(title)
             if (goal != 0) binding.goal.setText(goal.toString())
             if (minGoal != 0) binding.minGoal.setText(minGoal.toString())
+            if (color.isNotBlank()) binding.selectedColor.backgroundTintList =
+                ColorStateList.valueOf(Color.parseColor(color))
 
         }
     }
 
     private fun configureButtons() {
         binding.submitButtom.setOnClickListener { submit() }
+        binding.addColorButton.setOnClickListener { buildColorDialog() }
     }
 
     private fun submit() {
@@ -122,11 +127,29 @@ class AddHabitDialog(private val habit: Habit = Habit()) : BaseDialog() {
         else
             h.minGoal = 0
         context?.let {
-            h.color = ColorUtils.getColorHex(ContextCompat.getColor(it, R.color.alan_grape))
+            binding.selectedColor.backgroundTintList?.let { csl ->
+                h.color = ColorUtils.getColorHex(csl.defaultColor)
+            }
         }
         h.date = Calendar.getInstance().timeInMillis
 
         return h
+    }
+
+    private fun buildColorDialog() {
+        activity?.let {
+            val dialog = ColorDialog(it)
+
+            dialog.setOnFastChooseColorListener(object : ColorPicker.OnFastChooseColorListener {
+                override fun setOnFastChooseColorListener(position: Int, color: Int) {
+                    binding.selectedColor.backgroundTintList = ColorStateList.valueOf(color)
+                }
+
+                override fun onCancel() = dialog.dismissDialog()
+            })
+
+            dialog.show()
+        }
     }
 
     interface OnSuccessListener {

@@ -5,7 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.NavAction
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alanstd_3.alanbujo.R
@@ -33,6 +33,7 @@ class DashboardFragment : GeneralFragment() {
             inflater.inflate(R.layout.fragment_dashboard, container, false)
         )
 
+        configureAppearance()
         fillHabitList()
         configureButtons()
 
@@ -60,6 +61,11 @@ class DashboardFragment : GeneralFragment() {
             }
         }
 
+    }
+
+    private fun configureAppearance() {
+        activity?.window?.statusBarColor =
+            ContextCompat.getColor(requireContext(), R.color.black)
     }
 
     private fun configureButtons() {

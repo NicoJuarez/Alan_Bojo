@@ -2,13 +2,11 @@ package com.alanstd_3.alanbujo.ui.dialogs
 
 import android.app.Activity
 import android.content.res.Resources
-import android.util.Log
-import androidx.core.content.ContextCompat
 import com.alanstd_3.alanbujo.R
 import com.alanstd_3.alanbujo.general.ColorUtils
 import petrov.kristiyan.colorpicker.ColorPicker
 
-class ColorDialog(activity: Activity): ColorPicker(activity) {
+class ColorDialog(activity: Activity) : ColorPicker(activity) {
 
     init {
         val listColors = listOf(
@@ -20,7 +18,8 @@ class ColorDialog(activity: Activity): ColorPicker(activity) {
         )
 
         setColors(getListColors(listColors))
-        setColorButtonDrawable(R.drawable.shape_circle)
+        setRoundColorButton(true)
+        setTitle("Choose color")
 
 //        setOnFastChooseColorListener(object :
 //            ColorPicker.OnFastChooseColorListener {
@@ -44,13 +43,13 @@ class ColorDialog(activity: Activity): ColorPicker(activity) {
 //        })
     }
 
-    private fun getListColors(vararg colors: Int): ArrayList<String> {
-        val listColors = mutableListOf<Int>()
-        for (color in colors)
-            listColors.add(color)
-
-        return getListColors(listColors)
-    }
+//    private fun getListColors(vararg colors: Int): ArrayList<String> {
+//        val listColors = mutableListOf<Int>()
+//        for (color in colors)
+//            listColors.add(color)
+//
+//        return getListColors(listColors)
+//    }
 
     private fun getListColors(listColors: List<Int>): ArrayList<String> {
         val list = ArrayList<String>()
