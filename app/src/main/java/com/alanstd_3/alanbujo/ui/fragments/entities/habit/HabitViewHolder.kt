@@ -11,12 +11,12 @@ import kotlin.random.Random
 
 class HabitViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-//    init {
-//        inflate(habit)
-//    }
+    private var id: Long = 0
 
     fun fillContent(habit: Habit) {
         val binding = VhHabitBinding.bind(itemView)
+
+        id = habit.id
 
         binding.name.text = habit.title
         binding.imgBg.backgroundTintList = randomColor()
@@ -25,15 +25,15 @@ class HabitViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private fun randomColor(): ColorStateList? {
         return itemView.context.applicationContext?.let {
             val ran = Random(System.currentTimeMillis())
-            when (ran.nextInt(0, 3)) {
+            when (ran.nextInt(0, 4)) {
                 0 -> return@let ContextCompat.getColorStateList(it, R.color.alan_blue)
                 1 -> return@let ContextCompat.getColorStateList(it, R.color.alan_red)
-                2 -> return@let ContextCompat.getColorStateList(it, R.color.alan_pink)
+                2 -> return@let ContextCompat.getColorStateList(it, R.color.alan_yellow)
+                3 -> return@let ContextCompat.getColorStateList(it, R.color.alan_grape)
                 else -> return@let ContextCompat.getColorStateList(it, R.color.white)
             }
         }
 
-        return null
     }
 
 }

@@ -2,6 +2,8 @@ package com.alanstd_3.alanbujo.general
 
 import android.content.Context
 import android.content.res.Resources
+import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 
 class ColorUtils {
@@ -22,6 +24,6 @@ class ColorUtils {
             return ret
         }
 
-        fun getColorHex(resource: Int): String = "#" + Integer.toHexString(resource).toString()
+        fun getColorHex(@ColorInt resource: Int): String = "#" + Integer.toHexString(resource).toString()
     }
 }

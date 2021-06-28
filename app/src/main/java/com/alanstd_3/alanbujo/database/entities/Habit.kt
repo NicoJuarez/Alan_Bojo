@@ -3,6 +3,8 @@ package com.alanstd_3.alanbujo.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.text.SimpleDateFormat
+import java.util.*
 
 @Entity(tableName = Habit.TABLE_HABITS)
 data class Habit(
@@ -52,5 +54,14 @@ data class Habit(
         const val DATE = "date"
         const val COLOR = "color"
 
+    }
+
+    override fun toString(): String {
+        val c = Calendar.getInstance()
+        val sdf = SimpleDateFormat("yyyyMMdd - hh:mm:ss")
+        c.timeInMillis = date
+        return "HABIT => ${title.uppercase()}| Desc: $description; {goal: $goal; minGoal: $minGoal; " +
+                "current: $currentDone; extra: $extra; color: $color; date: ${sdf.format(c.time)}}" +
+                "\nnote1: $note1\nnote2: $note2\nnote3: $note3"
     }
 }

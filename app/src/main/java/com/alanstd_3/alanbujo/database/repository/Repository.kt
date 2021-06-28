@@ -67,8 +67,20 @@ class Repository(context: Context) {
     }
 
     fun getHabit(id: Long): Habit {
-        return runBlocking (Dispatchers.Default){
+        return runBlocking(Dispatchers.Default) {
             return@runBlocking db.habitDao().getById(id)
+        }
+    }
+
+    fun getAllHabits(): List<Habit> {
+        return runBlocking(Dispatchers.Default) {
+            return@runBlocking db.habitDao().getAll()
+        }
+    }
+
+    fun saveHabit(habit: Habit): Long {
+        return runBlocking(Dispatchers.Default) {
+            return@runBlocking db.habitDao().insert(habit)
         }
     }
 

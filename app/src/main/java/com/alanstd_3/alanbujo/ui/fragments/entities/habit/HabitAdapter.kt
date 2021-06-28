@@ -19,4 +19,9 @@ class HabitAdapter(private val habits: List<Habit>) : RecyclerView.Adapter<Habit
     override fun getItemCount(): Int {
         return habits.size
     }
+
+    fun update(){
+        notifyDataSetChanged()
+        notif
+    }
 }
