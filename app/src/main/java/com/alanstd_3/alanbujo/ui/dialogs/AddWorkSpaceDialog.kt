@@ -1,6 +1,6 @@
 package com.alanstd_3.alanbujo.ui.dialogs
 
-import android.content.res.Resources
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -50,17 +50,19 @@ class AddWorkSpaceDialog : BaseDialog() {
     private fun configureButtons() {
         binding.addColorButton.setOnClickListener {
             activity?.let {
-                val mPicker = ColorPicker(it)
+//                val mPicker = ColorPicker(it)
+//
+//                val listColors = listOf(
+//                    R.color.alan_aqua, R.color.alan_yellow,
+//                    R.color.alan_green, R.color.alan_pink,
+//                    R.color.alan_blue, R.color.alan_orange,
+//                    R.color.alan_red, R.color.alan_light_blue,
+//                    R.color.alan_grape
+//                )
+//                mPicker.setColors(getListColors(listColors))
+//                mPicker.setColorButtonDrawable(R.drawable.shape_circle)
 
-                val listColors = listOf(
-                    R.color.alan_aqua, R.color.alan_yellow,
-                    R.color.alan_green, R.color.alan_pink,
-                    R.color.alan_blue, R.color.alan_orange,
-                    R.color.alan_red, R.color.alan_light_blue,
-                    R.color.alan_grape
-                )
-                mPicker.setColors(getListColors(listColors))
-                mPicker.setColorButtonDrawable(R.drawable.shape_circle)
+                val mPicker = ColorDialog(it)
 
                 mPicker.setOnFastChooseColorListener(object :
                     ColorPicker.OnFastChooseColorListener {
@@ -68,10 +70,10 @@ class AddWorkSpaceDialog : BaseDialog() {
 
                         context?.let { c ->
                             binding.selectedColor.backgroundTintList =
-                                ContextCompat.getColorStateList(c, listColors[position])
-                            hexColor = ColorUtils.getColorHex(
-                                ContextCompat.getColor(c, listColors[position])
-                            )
+//                                ContextCompat.getColorStateList(c, listColors[position])
+                                ColorStateList.valueOf(color)
+                            hexColor = ColorUtils.getColorHex(color)
+
                             Log.d(TAG, "setOnFastChooseColorListener: $hexColor")
                         }
                         mPicker.dismissDialog()
@@ -105,35 +107,6 @@ class AddWorkSpaceDialog : BaseDialog() {
         }
     }
 
-    private fun getListColors(vararg colors: Int): ArrayList<String> {
-        val listColors = mutableListOf<Int>()
-        for (color in colors)
-            listColors.add(color)
-
-        return getListColors(listColors)
-    }
-
-    private fun getListColors(listColors: List<Int>): ArrayList<String> {
-        val list = ArrayList<String>()
-
-        context?.let { c ->
-
-            for (color in listColors) {
-                try {
-//                    val hex = "#" + Integer.toHexString(
-//                        ContextCompat.getColor(c, color)
-//                    ).toString()
-                    val hex = ColorUtils.getColorHex(color, c)
-                    if (hex.isNotBlank())
-                        list.add(hex)
-                } catch (e: Resources.NotFoundException) {
-                    e.printStackTrace()
-                }
-            }
-        }
-
-        return list
-    }
 
     private fun setErrorTitle(error: String?) {
         binding.inputTitle.error = error

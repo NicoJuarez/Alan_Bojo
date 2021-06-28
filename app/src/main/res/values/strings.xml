@@ -12,7 +12,7 @@
     <!--Text_Error-->
     <string name="text_error_title_exists">Title already exists</string>
     <string name="text_empty_field">This field can not be empty</string>
-    <string name="text_min_goal_goal">Min Goal must be lower or equal than goal</string>
+    <string name="text_min_goal_goal">Min Goal must be lower than goal</string>
 
     <!--Hint-->
     <string name="hint_task_description">Task description</string>

@@ -11,7 +11,7 @@ import com.alanstd_3.alanbujo.databinding.DialogCreateHabitBinding
 import com.alanstd_3.alanbujo.general.ColorUtils
 import java.util.*
 
-class AddHabitDialog : BaseDialog() {
+class AddHabitDialog(private val habit: Habit = Habit()) : BaseDialog() {
 
     private lateinit var binding: DialogCreateHabitBinding
     var listener: OnSuccessListener? = null
@@ -33,6 +33,13 @@ class AddHabitDialog : BaseDialog() {
 
     private fun configureInitialUse() {
         binding.habitName.requestFocus()
+
+        habit.apply {
+            if (title.isNotBlank()) binding.habitName.setText(title)
+            if (goal != 0) binding.goal.setText(goal.toString())
+            if (minGoal != 0) binding.minGoal.setText(minGoal.toString())
+
+        }
     }
 
     private fun configureButtons() {
@@ -89,8 +96,9 @@ class AddHabitDialog : BaseDialog() {
                 error = null
             }
 
-            return if (minGoal.isNotBlank() && minGoal.toInt() > goal.toInt()) {
+            return if (minGoal.isNotBlank() && minGoal.toInt() >= goal.toInt()) {
                 binding.minGoal.apply {
+                    this.requestFocus()
                     error = getString(R.string.text_min_goal_goal)
                 }
                 false

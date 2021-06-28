@@ -30,6 +30,8 @@ data class Habit(
     var date: Long = 0,
     @ColumnInfo(name = COLOR)
     var color: String = "",
+    @ColumnInfo(name = DAYS)    //1,2,3,4,5,6,7 ; where 1 => SUNDAY...
+    var days: String = "",
 ) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = ID)
@@ -53,6 +55,7 @@ data class Habit(
         const val NOTE_3 = "n_3"
         const val DATE = "date"
         const val COLOR = "color"
+        const val DAYS = "days"
 
     }
 
@@ -63,5 +66,47 @@ data class Habit(
         return "HABIT => ${title.uppercase()}| Desc: $description; {goal: $goal; minGoal: $minGoal; " +
                 "current: $currentDone; extra: $extra; color: $color; date: ${sdf.format(c.time)}}" +
                 "\nnote1: $note1\nnote2: $note2\nnote3: $note3"
+    }
+
+    /**
+     * Changes only elemental information, maintaining date, id...
+     */
+    fun copyElementalValues(newHabit: Habit) {
+        color = newHabit.color
+        goal = newHabit.goal
+        minGoal = newHabit.minGoal
+        title = newHabit.title
+        description = newHabit.description
+        if (currentDone > goal) {
+            currentDone = goal
+        }
+    }
+
+    /**
+     * Reset the values like currentCount, extras, in function of currentDay._
+     */
+    fun cleanIfNeeds() {
+        if (days.isNotBlank()) {
+            val aDays = days.split(",")
+            val calendar = Calendar.getInstance()
+            val currentDay = calendar.get(Calendar.DAY_OF_WEEK)
+
+            var i = 0
+            while (i < aDays.size && currentDay != aDays[i].toInt()) {
+                i++
+            }
+
+            if (i < aDays.size)
+                forceClean()
+
+        } else {
+            forceClean()
+        }
+
+    }
+
+    fun forceClean() {
+        currentDone = 0
+        extra = 0
     }
 }

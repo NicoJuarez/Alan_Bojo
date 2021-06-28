@@ -28,7 +28,7 @@ class HabitViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             habit.goal == habit.currentDone -> {
                 binding.goalCaption.visibility = View.VISIBLE
             }
-            habit.minGoal <= habit.currentDone ->{
+            (habit.minGoal!= 0) && (habit.minGoal <= habit.currentDone) ->{
                 binding.goalCaption.visibility = View.VISIBLE
                 itemView.context?.let{
                     binding.goalCaption.imageTintList=

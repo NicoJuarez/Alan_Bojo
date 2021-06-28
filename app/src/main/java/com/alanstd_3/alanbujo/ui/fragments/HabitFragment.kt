@@ -1,5 +1,6 @@
 package com.alanstd_3.alanbujo.ui.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -16,6 +17,7 @@ import com.alanstd_3.alanbujo.R
 import com.alanstd_3.alanbujo.database.entities.Habit
 import com.alanstd_3.alanbujo.database.repository.Repository
 import com.alanstd_3.alanbujo.databinding.FragmentHabitBinding
+import com.alanstd_3.alanbujo.ui.dialogs.AddHabitDialog
 
 class HabitFragment : GeneralFragment() {
 
@@ -49,15 +51,9 @@ class HabitFragment : GeneralFragment() {
             if (args.id == 0L)
                 return@let
 
-
             context?.let {
                 val repo = Repository(it.applicationContext)
                 habit = repo.getHabit(args.id)
-
-//            habit = Habit(
-//                title = "Drink water!!", description = "#DrinkWaterChallenge",
-//                minGoal = 2, goal = 5, extra = 0, currentDone = 3
-//            )
 
                 habit?.let { h ->
                     binding.title.text = h.title
@@ -65,7 +61,14 @@ class HabitFragment : GeneralFragment() {
 
                     fillItems(h.minGoal, h.goal - h.minGoal, h.extra)
                     setChecked(h.currentDone)
+
+                    if (h.color.isNotBlank()) {
+                        val color = Color.parseColor(h.color)
+                        binding.mainLayout.setBackgroundColor(color)
+                        activity?.window?.statusBarColor = color
+                    }
                 }
+
             }
         }
 
@@ -110,13 +113,9 @@ class HabitFragment : GeneralFragment() {
     }
 
     private fun configureButtons() {
-        binding.addNoteButton.setOnClickListener {
-            showAddNoteDialog()
-        }
-
-        binding.submitButton.setOnClickListener {
-            submit()
-        }
+        binding.addNoteButton.setOnClickListener { showAddNoteDialog() }
+        binding.submitButton.setOnClickListener { submit() }
+        binding.editButton.setOnClickListener { buildEditWindow() }
     }
 
     private fun showAddNoteDialog() {
@@ -175,6 +174,7 @@ class HabitFragment : GeneralFragment() {
     }
 
     private fun addExtraItems(extraCount: Int) {
+        // TODO: Implementar._
 
     }
 
@@ -223,6 +223,39 @@ class HabitFragment : GeneralFragment() {
             Log.d(TAG, "saveCurrentData: (No se guardó)")
         }
 
+    }
+
+    private fun buildEditWindow() {
+        habit?.let {
+            val dialog = AddHabitDialog(it)
+
+            dialog.listener = object : AddHabitDialog.OnSuccessListener {
+                override fun onSuccess(habit: Habit) {
+//                this@HabitFragment.habit = habit
+                    rebuildContent(habit)
+                }
+            }
+
+            dialog.show(childFragmentManager, "")
+        }
+    }
+
+    private fun rebuildContent(newHabit: Habit) {
+        if (newHabit.goal != habit?.goal || newHabit.minGoal != habit?.minGoal) {
+            this.itemList.clear()
+            binding.itemsList.removeAllViews()
+        }
+
+        context?.let {
+            val repo = Repository(it.applicationContext)
+            habit?.let { h ->
+                h.apply {
+                    copyElementalValues(newHabit)
+                }
+                repo.updateHabit(h)
+                fillContent()
+            }
+        }
     }
 
 
